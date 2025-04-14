@@ -1,0 +1,190 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="boostrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="boostrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/menu.js"></script>
+    <script src="js/danhmuc.js"></script>
+    <script src="js/room.js"></script>
+    <script src="js/baiviet.js"></script>
+    <script src="js/diachi.js"></script>
+    <script>
+        window.onload = function(){
+            loadMenu();
+            loadFormTimKiem();
+            loadDanhMucTimKiem();
+            loadDanhMucBenPhai();
+            baiVietMoiNhat();
+            phongMoiDang();
+            loadProvince();
+        }
+    </script>
+</head>
+<body>
+    <div id="mainmenu"></div>
+
+    <div class="contentpage">
+
+        <div class="container">
+            <div id="divsearch"> </div>
+        </div>
+        
+        <div class="container linksearch">
+            <a href="">Trang chủ > </a><span id="diachismall">Tất cả khu vực</span>
+            <h3 class="titlesearch" id="titlesearch"></h3>
+        </div>
+
+        <div class="container danhsachtinhdb">
+            <div class="row">
+                <div class="col-sm phongtieubieu"></div>
+                <div class="col-sm phongtieubieu">
+                    <a class="location-item" href="">
+                        <div class="location-bg" style="background-image: url('image/hcm.jpg') ;"></div>
+                        <span class="location-cat">Phòng trọ <span class="location-name">Hồ Chí Minh</span></span>
+                    </a>
+                </div>
+                <div class="col-sm phongtieubieu">
+                    <a class="location-item" href="">
+                        <div class="location-bg" style="background-image: url('image/hanoi.jpg') ;"></div>
+                        <span class="location-cat">Phòng trọ <span class="location-name">Hà nội</span></span>
+                    </a>
+                </div>
+                <div class="col-sm phongtieubieu">
+                    <a class="location-item" href="">
+                        <div class="location-bg" style="background-image: url('image/danang.jpg') ;"></div>
+                        <span class="location-cat">Phòng trọ <span class="location-name">Đà nẵng</span></span>
+                    </a>
+                </div>
+                <div class="col-sm phongtieubieu"></div>
+            </div>
+        </div>
+
+        <div class="container danhsachtindang">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="noidungdsphong">
+                        <h5>Danh sách tin đăng</h5>
+                        <div id="danhsachcacphong" class="danhsachphongindex">
+                            <div class="singleroom row">
+                                <div class="col-sm-3 divanhphong">
+                                    <img src="image/phong.jpg" class="anhroom">
+                                </div>
+                                <div class="col-sm-9">
+                                    <a href="" class="tenphongindex">BẠN YÊU CÁI ĐẸP - THÍCH SỰ TỰ DO ĐẢ CÓ DATAHOME
+                                        L.O! GIẢM 1.500.000 THÁNG…</a>
+                                    <div class="thongtinct">
+                                        <p class="giatientro">3.9 triệu/tháng</p>
+                                        <p class="dientichtro">20m²</p>
+                                        <p class="diachitro">Ha Noi</p>
+                                        <p class="thoigiandangtro">Hôm nay</p>
+                                    </div>
+                                    <p class="motatro">GIẢM 1.500.000</p>
+                                    <div class="thongtinnguoidang">
+                                        <img src="image/user.png" class="nguoidang">
+                                        <p>HT KIET</p>
+                                        <p><a href="tel:0923643234" class="btngoi">Gọi 0923643234</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4" id="danhmucphai">
+                    <div class="noidungdsphong">
+                        <h5>Danh mục cho thuê</h5>
+                        <div class="listcategory" id="danhmucsoluong">
+                            <div class="singledm">
+                                <a href="">> Cho thuê phòng trọ</a><span>(2102)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="noidungdsphong">
+                        <h5>Xem theo giá</h5>
+                        <div class="listcategory">
+                            <div class="singledm">
+                                <a href="">> Dưới 1 triệu</a>
+                                <span><a href="">> Từ 1 - 2 triệu</a></span>
+                            </div>
+                            <div class="singledm">
+                                <a href="">> Từ 2 - 3 triệu</a>
+                                <span><a href="">> Từ 3 - 5 triệu</a></span>
+                            </div>
+                            <div class="singledm">
+                                <a href="">> Từ 5 - 7 triệu</a>
+                                <span><a href="">> Từ 7 - 10 triệu</a></span>
+                            </div>
+                            <div class="singledm">
+                                <a href="">> Từ 10 - 15 triệu</a>
+                                <span><a href="">> Trên 15 triệu</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="noidungdsphong">
+                        <h5>Xem theo diện tích</h5>
+                        <div class="listcategory">
+                            <div class="singledm">
+                                <a href="">> Dưới 20 m2</a>
+                                <span><a href="">> Từ 20 - 30m2</a></span>
+                            </div>
+                            <div class="singledm">
+                                <a href="">> Từ 30m2 - 50m2</a>
+                                <span><a href="">> Từ 50m2 - 70m2</a></span>
+                            </div>
+                            <div class="singledm">
+                                <a href="">> Từ 70m2 - 90m2</a>
+                                <span><a href="">> Trên 90m2</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="noidungdsphong">
+                        <h5>Tin mới đăng</h5>
+                        <div class="listcategory" id="phongmoidang">
+                            <div class="singleroom row sanphammoidang">
+                                <div class="col-sm-3 divanhphong">
+                                    <img src="image/phong.jpg" class="anhroom">
+                                </div>
+                                <div class="col-sm-9">
+                                    <a href="" class="tenphongindex">BẠN YÊU CÁI ĐẸP - THÍCH SỰ TỰ DO ĐẢ CÓ DATAHOME
+                                        L.O! GIẢM 1.500.000 THÁNG…</a>
+                                    <div class="thongtinct">
+                                        <p class="giatientro">3.9 triệu/tháng</p>
+                                        <p class="thoigiandangtro">Hôm nay</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="noidungdsphong">
+                        <h5>Bài viết mới</h5>
+                        <div class="listcategory" id="listbvmoinhat">
+                            <div class="singledm">
+                                <a href="">> Khuyến mãi đặc biệt cho thành viên mới</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="footer-wrapper" id="footer"></div>
+
+
+</body>
+</html>

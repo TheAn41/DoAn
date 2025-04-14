@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="css/styles.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.tiny.cloud/1/mcvdwnvee5gbrtksfafzj5cvgml51to5o3u7pfvnjhjtd2v1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="js/main.js"></script>
+<script src="js/lienhe.js"></script>
+<script>
+    window.onload = function(){
+    }
+</script>
+</head>
+<body class="sb-nav-fixed">
+    <nav id="top" class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <button></button>
+        </div>
+        <div id="layoutSidenav_content">
+            <main class="main">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3 class="titlelienhe">Liên hệ với chúng tôi</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="sdtlienhect">
+                            <h5>Thông tin liên hệ</h5>
+                            <p>Chúng tôi biết bạn có rất nhiều sự lựa chọn. Nhưng cảm ơn vì đã lựa chọn TIMPHONGTRO</p>
+                            <p class="titcn">Điện thoại: <span>0123 456 789</span></p>
+                            <p class="titcn">Email: <span>timphongtro@gmail.com</span></p>
+                            <p class="titcn">Zalo: <span>0123 456 789</span></p>
+                            <p class="titcn">Địa chỉ: <span>24 Tây Lai Xá, Kim Chung, Hoài Đức, Hà Nội </span></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="blockcontent">
+                            <label for="email">Họ tên của bạn:</label>
+                            <input class="form-control" id="hoten"/>
+                            
+                            <label for="email">Email hoặc số điện thoại của bạn:</label>
+                            <input class="form-control" id="email"/>
+
+                            <label for="content">Nội dung liên hệ:</label>
+                            <textarea style="height: 100px" class="form-control" id="content"></textarea><br><br>
+
+                            <button onclick="createLienHe()" class="btn btn-primary form-control">Gửi liên hệ</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        $('#example').DataTable();
+    </script>
+</body>
+</html>

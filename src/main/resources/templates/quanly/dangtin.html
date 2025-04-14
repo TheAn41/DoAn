@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.tiny.cloud/1/viodqf5ztwa33e0w0km5v3ttgvpkxhwmu3g4rk33yri2lab7/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!--    jquery validation-->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+    <script src="js/main.js"></script>
+    <script src="js/address.js"></script>
+    <script src="js/danhmuc.js"></script>
+    <script src="js/taikhoan.js"></script>
+    <script src="js/room.js"></script>
+    <script>
+        window.onload = function () {
+            loadInit();
+            loadDanhMuc();
+            loadProvince();
+            loadThongTinTaiKhoanThemPhong();
+            loadChiTietPhong();
+            loadInput();
+        }
+    </script>
+    <style>
+        .validation-message{
+            color: red;
+        }
+    </style>
+</head>
+<body class="sb-nav-fixed">
+<nav id="top" class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <button></button>
+    </div>
+    <div id="layoutSidenav_content">
+        <main class="main">
+<!--            <form action="" type="post" id="formThemMoiTinDang">-->
+                <div class="blockcontent">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ghichuql">
+                                <p>Khi đăng tin, bạn đã chấp nhận chính sách của chúng tôi, để tránh việc lợi dụng cập nhật
+                                    thông tin
+                                    phòng để đăng phòng mới, chúng tôi sẽ thu phí ngay cả khi bạn cập nhật thông tin
+                                    phòng.<br>
+                                    Bạn hãy chắc chắn thông tin phòng đã chính xác trước khi đăng tin.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <h3>Địa chỉ cho thuê </h3>
+                                <div class="col-sm-4">
+                                    <label>Chọn tỉnh <span style="color: red">*</span></label>
+                                    <select id="tinh" class="form-control" onchange="loadHuyen()">
+                                        <option disabled selected>Chọn tỉnh thành</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Chọn huyện </label>
+                                    <select id="huyen" class="form-control" onchange="loadXa()">
+                                        <option disabled selected>Chọn quận/huyện</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Chọn xã </label>
+                                    <select id="xa" class="form-control" onchange="hienThiDiaChiDaChon()">
+                                        <option disabled selected>Chọn phường/ xã</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label>Tên đường, số nhà</label>
+                                    <input id="tenduong" type="text" onkeyup="hienThiDiaChiDaChon()" class="form-control">
+                                </div>
+                                <div class="col-sm-12">
+                                    <label>Địa chỉ đã chọn</label>
+                                    <input id="dcdachon" readonly disabled type="text" class="form-control">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+
+                                <h3>Thông tin mô tả</h3>
+                                <div class="col-12">
+                                    <label>Loại chuyên mục</label>
+                                    <select id="danhmuclist" class="form-control" onchange="getFilterByTypeRoom(this)">
+                                        <option disabled selected>Cho thuê căn hộ</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label>Tiêu đề <span style="color: red">*</span></label>
+                                    <input id="tieude" type="text" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <label>Ngày bắt đầu <span style="color: red">*</span></label>
+                                    <input id="startDate" type="date" name="startDate"  class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <label>Giá cho thuê <span style="color: red">*</span></label>
+                                    <input type="number" class="form-control" id="giatien"
+                                           style="display: inline-block; width: 88%;" min="0"
+                                           oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                                    <span style="display: inline-block;"> :Vnd </span>
+                                </div>
+                                <div class="col-6">
+                                    <label>Diện tích <span style="color: red">*</span></label>
+                                    <input type="number" class="form-control" id="dientich"
+                                           style="display: inline-block; width: 90%;" min="0"
+                                           oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                                    <span style="display: inline-block;"> :m2 </span>
+                                </div>
+                                <div id="dsloctheoloaiphong" class="row">
+
+                                </div>
+                                <div class="col-12">
+                                    <label>Mô tả phòng <span style="color: red">*</span></label>
+                                    <textarea id="editor" name="content"></textarea>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 chooseImage">
+                            <h3>Thông tin liên hệ</h3>
+                            <label>Họ tên</label>
+                            <input id="hoten" readonly disabled type="text" class="form-control">
+                            <label>Số điện thoại</label>
+                            <input id="sdt" readonly disabled type="text" class="form-control"><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Chọn ảnh</h3>
+                                    <label>Ảnh bìa <span style="color: red">*</span></label>
+                                    <input id="anhbiass" type="file" class="form-control">
+                                    <br><img style="width: 100px;" id="anhendathem">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row" id="preview">
+                                                <div class="col-md-12" id="chon-anhs">
+                                                    <div id="choose-image" class="choose-image"
+                                                         onclick="document.getElementById('choosefile').click(); return false;">
+                                                        <p><img src="../image/upload.png" id="camera"></p>
+                                                        <p id="numimage">Thêm ảnh <span style="color: red">*</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="listpreview">
+
+                                            </div>
+                                        </div>
+                                        <div class="row" id="divanhdathem" style="display: none;">
+                                            <div class="col-sm-12">
+                                                <h4 style="margin-top: 30px;">Ảnh đã thêm</h4>
+                                            </div>
+                                            <!-- <div class="col-md-4">
+                                                <img style="width: 90%;" src="../image/detail.jpeg" class="image-upload">
+                                                <button class="btn btn-danger form-control">Xóa ảnh</button>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="file" id="choosefile" multiple onchange="readURL(this);"
+                                       style="visibility: hidden;">
+
+                                <div class="col-md-12">
+                                    <div id="loading">
+                                        <div class="bar1 bar"></div>
+                                    </div>
+                                    <br><br>
+                                    <button class="btn btn-success upload-submit" type="submit" onclick="themPhong()">Đăng phòng </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--            </form>-->
+        </main>
+    </div>
+</div>
+
+</body>
+<script>
+    anhbiass.onchange = evt => {
+        const [file] = anhbiass.files
+        if (file) {
+            anhendathem.src = URL.createObjectURL(file)
+        }
+    }
+    tinymce.init({
+        selector: 'textarea#editor',
+    });
+
+</script>
+</html>

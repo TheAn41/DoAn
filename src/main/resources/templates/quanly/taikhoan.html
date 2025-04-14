@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="css/styles.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.tiny.cloud/1/mcvdwnvee5gbrtksfafzj5cvgml51to5o3u7pfvnjhjtd2v1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="js/main.js"></script>
+<script src="js/taikhoan.js"></script>
+<script>
+    window.onload = function(){
+        loadThongTinTaiKhoan();
+    }
+</script>
+</head>
+<body class="sb-nav-fixed">
+    <nav id="top" class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <button></button>
+        </div>
+        <div id="layoutSidenav_content">
+            <main class="main">
+                <div>
+                    <a>heheh</a>
+                </div>
+                <div class="blockcontent">
+                        <h3>Cập nhật thông tin cá nhân</h3>
+                        <div style="margin: auto;" class="col-sm-8">
+                            <table class="table">
+                                <tr>
+                                    <td>Mã thành viên</td>
+                                    <td><input id="iduser" readonly disabled class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><input id="emailuser" readonly disabled class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tên hiển thị</td>
+                                    <td><input id="tenhienthi" class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td>Số điện thoại</td>
+                                    <td><input id="sdt" class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td>Link facebook</td>
+                                    <td><input id="linkface" class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td>Mật khẩu</td>
+                                    <td><a data-bs-toggle="modal" data-bs-target="#doimk" href="#">Đổi mật khẩu</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Ảnh đại diện</td>
+                                    <td>
+                                        <div>
+                                            <img src="../image/user.png" id="anhdaidien" class="anhdaidienupdate">
+                                            <br><button id="btnuploadavatar" class="btn btn-secondary btnuploadavatar">Chọn ảnh</button>
+                                            <input id="inputchonavatar" type="file" style="visibility: hidden;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <div id="loading">
+                                            <div class="bar1 bar"></div>
+                                        </div><br><br>
+                                        <button class="btn btn-success upload-submit" onclick="capNhatThongTin()">Cập nhật</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <div class="modal" id="doimk" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Cập nhật mật khẩu</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body">
+                <div class="content-profile">
+                    <label>Mật khẩu cũ</label>
+                    <input id="oldpass" class="form-control" type="password" placeholder="*****">
+                    <label>Mật khẩu mới</label>
+                    <input id="newpass" class="form-control" type="password" placeholder="*****">
+                    <label>Nhập lại mật khẩu mới</label>
+                    <input id="renewpass" class="form-control" type="password" placeholder="*****"><br><br>
+                    <button onclick="changePassword()" class="btn btn-primary form-control">Cập nhật mật khẩu</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <script>
+        $('#btnuploadavatar').click(function(){
+            $('#inputchonavatar').click();
+        });
+        inputchonavatar.onchange = evt => {
+            const [file] = inputchonavatar.files
+            if (file) {
+                anhdaidien.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+</body>
+</html>
