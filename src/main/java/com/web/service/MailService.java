@@ -49,7 +49,7 @@ public class MailService {
             message.setText(content, isHtml);
             System.out.println("content: "+content);
             javaMailSender.send(mimeMessage);
-            log.debug("Sent email to User '{}'", to);
+            log.debug("Sent email to user '{}'", to);
         } catch (MailException | MessagingException e) {
             log.warn("Email could not be sent to user '{}'", to, e);
         }
