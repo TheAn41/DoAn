@@ -122,7 +122,7 @@ async function themPhong() {
     var fridge = document.getElementById('fridge')?.checked ? 1 : 0
     var bed = document.getElementById('bed')?.checked ? 1 : 0
     var airConditioner = document.getElementById('airConditioner')?.checked ? 1 : 0
-    var Heater = document.getElementById('Heater')?.checked ? 1 : 0
+    var heater = document.getElementById('heater')?.checked ? 1 : 0
     var washingMachine = document.getElementById('washingMachine')?.checked ? 1 : 0
     var kitchen = document.getElementById('kitchen')?.checked ? 1 : 0
     var wifi = document.getElementById('wifi')?.checked ? 1 : 0
@@ -169,7 +169,7 @@ async function themPhong() {
         "tv": tv,
         "fridge": fridge,
         "bed": bed,
-        "Heater": Heater,
+        "heater": heater,
         "kitchen": kitchen,
         "wifi": wifi,
         "parking": parking
@@ -389,7 +389,7 @@ async function loadChiTietPhong() {
         if ($("#tv").length) $("#tv").prop("checked", room.tv == 1);
         if ($("#fridge").length) $("#fridge").prop("checked", room.fridge == 1);
         if ($("#bed").length) $("#bed").prop("checked", room.bed == 1);
-        if ($("#Heater").length) $("#Heater").prop("checked", room.Heater == 1);
+        if ($("#heater").length) $("#heater").prop("checked", room.heater == 1);
         if ($("#washingMachine").length) $("#washingMachine").prop("checked", room.washingMachine == 1);
         if ($("#kitchen").length) $("#kitchen").prop("checked", room.kitchen == 1);
         if ($("#wifi").length) $("#wifi").prop("checked", room.wifi == 1);
@@ -520,27 +520,27 @@ function initForm() {
             {
                 "room": "6",
                 "name": "Chung cư mini",
-                "filters": "tv,airConditioner,bed,airConditioner,Heater,washingMachine,kitchen,numberOfRoom,numberOfWc,direction,wifi,service"
+                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,direction,wifi,service"
             },
             {
                 "room":"2",
                 "name": "Cho thuê nhà riêng",
-                "filters": "tv,airConditioner,bed,airConditioner,Heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi"
+                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi"
             },
             {
                 "room":"3",
                 "name": "Tìm người ở ghép",
-                "filters": "tv,airConditioner,bed,airConditioner,Heater,washingMachine,kitchen,numberOfPeople,closedWc,direction,wifi,parking"
+                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfPeople,closedWc,direction,wifi,parking"
             },
             {
                 "room":"4",
                 "name": "Cho thuê mặt bằng",
-                "filters": "tv,airConditioner,bed,airConditioner,Heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi,parking"
+                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi,parking"
             },
             {
                 "room":"1",
                 "name": "Cho thuê phòng trọ",
-                "filters": "tv,airConditioner,bed,airConditioner,Heater,washingMachine,kitchen,numberOfPeople,closedWc,frontWidth,direction,wifi,parking"
+                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfPeople,closedWc,frontWidth,direction,wifi,parking"
             }
         ],
         "params" : [
@@ -629,7 +629,7 @@ function initForm() {
                 "type": "checkbox"
             },
             {
-                "id": "Heater",
+                "id": "heater",
                 "value": "Bình nóng lạnh",
                 "type": "checkbox"
             },

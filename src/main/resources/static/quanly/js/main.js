@@ -78,6 +78,11 @@ function loadtop(){
 
 
 async function logout(){
+    const user_id = localStorage.getItem("user_id");
+    if (user_id && user_id !== "undefined") {
+        localStorage.removeItem("post_favorist_" + user_id);
+    }
+    localStorage.removeItem("user_id");
     sessionStorage.removeItem("token");
     window.location.replace('../logout')
 }

@@ -66,9 +66,22 @@
     <script>
         tinymce.init({
           selector: 'textarea',
-          plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-          tinycomments_mode: 'embedded',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist | emoticons charmap | removeformat',
+            menubar: 'file edit insert format tools table',
+            // giữ nguyên format khi dán nội dung (từ Word, Web,...)
+            paste_as_text: false,              // Không chuyển về plain text
+            paste_data_images: true,           // Cho phép dán ảnh dạng base64
+            paste_webkit_styles: "all",        // Giữ tất cả style khi paste
+            paste_retain_style_properties: "all",
+
+            // cho phép một số thẻ HTML và style inline
+            valid_elements: '*[*]',
+            valid_styles: {
+                '*': 'font-family,font-size,font-weight,font-style,text-decoration,color,background-color,text-align'
+            },
+
+            tinycomments_mode: 'embedded',
           tinycomments_author: 'Author name',
           mergetags_list: [
             { value: 'First.Name', title: 'First Name' },

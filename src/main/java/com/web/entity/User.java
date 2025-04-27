@@ -54,5 +54,8 @@ public class User{
     )
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<SavedFilter> savedFilters;
 }
 

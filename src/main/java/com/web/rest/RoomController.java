@@ -8,6 +8,7 @@ import com.web.repository.FavoriteRepository;
 import com.web.repository.RoomRepository;
 import com.web.repository.StatusRoomRepository;
 import com.web.repository.UserRepository;
+import com.web.service.SavedFilterService;
 import com.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,9 @@ public class RoomController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private SavedFilterService savedFilterService;
+
     @PostMapping("/all/dang-phong")
     public Room save(@RequestBody Room room) throws Exception {
         User user = userService.getUserWithAuthority();
@@ -50,8 +54,10 @@ public class RoomController {
         room.setUser(user);
         room.setStatusRoom(statusRoomRepository.findById(1L).get());
         Room result = roomRepository.save(room);
+
         user.setAmount(user.getAmount()- 10000);
         userRepository.save(user);
+        savedFilterService.checkAndNotifyUsers(room);
         return result;
     }
 

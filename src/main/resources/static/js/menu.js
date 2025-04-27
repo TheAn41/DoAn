@@ -26,9 +26,11 @@ async function loadMenu(){
                 <ul class="dropdown-menu" aria-labelledby="morongnoidung">
                     <li class="licanhan"><a class="dropdown-item" href="quanly/dangtin"><img src="image/themtin.png" class="imglogotopmenu"> Đăng tin cho thuê</a></li>
                     <li class="licanhan"><a class="dropdown-item" href="quanly/quanlytin"><img src="image/tattin.png" class="imglogotopmenu"> Quản lý tin đăng</a></li>
+                    <li class="licanhan"><a class="dropdown-item" href="quanly/baiviet"><img src="image/baiviet.png" class="imglogotopmenu"> Quản lý bài viết</a></li>
                     <li class="licanhan"><a class="dropdown-item" href="quanly/taikhoan"><img src="image/usermenu.png" class="imglogotopmenu"> Thông tin cá nhân</a></li>
                     <li class="licanhan"><a class="dropdown-item" href="quanly/naptien"><img src="image/pay.png" class="imglogotopmenu"> Nạp tiền</a></li>
                     <li class="licanhan"><a class="dropdown-item" href="quanly/lichsunap"><img src="image/history.png" class="imglogotopmenu"> Lịch sử nạp tiền</a></li>
+                        <li class="licanhan"><a class="dropdown-item" href="quanly/lienhe"><img src="image/lienhe.png" class="imglogotopmenu">Liên hệ admin</a></li>
                     <li onclick="dangXuat()"><a class="dropdown-item" href="#"><img src="image/dangxuatmenu.png" class="imglogotopmenu"> Đăng xuất</a></li>
                 </ul>
                     `
@@ -178,17 +180,24 @@ function loadFormTimKiem(){
     var typeLoaiPhong = uls.searchParams.get("loaiphong");
     console.log('loai phong:',typeLoaiPhong);
     //var addfilter = loadSearchByTypeRoom()
+
     var btn = ''
     if (typeLoaiPhong){
-        btn = '<button id="filterButton" class="btn btn-secondary btn-sm" style="float: right" type="button" onclick="showFilter()">Thêm chi tiết lọc</button>'
+
+        btn = `
+    <div style="float: right; display: flex; gap: 10px;">
+        <button id="saveFilterButton" class="btn btn-success btn-sm" type="button" onclick="saveFilter()">Lưu bộ lọc</button>
+        <button id="filterButton" class="btn btn-secondary btn-sm" type="button" onclick="showFilter()">Thêm chi tiết lọc</button>
+    </div>`
     }else {
         btn = ''
     }
+
     var khuvuctinh = uls.searchParams.get("khuvuctinh") ? uls.searchParams.get("khuvuctinh") : -1
     var khuvuchuyen = uls.searchParams.get("khuvuchuyen") ? uls.searchParams.get("khuvuchuyen") : -1
     var khuvucxa = uls.searchParams.get("khuvucxa") ? uls.searchParams.get("khuvucxa") : -1
 
-    var formsearch = 
+    var formsearch =
     `<form action="danhsachphong" id="formsearch" method="get">
         <div class="row searchtop" >
             <div class="col-md chucnangtop">
@@ -225,8 +234,11 @@ function loadFormTimKiem(){
             </div>
             <div class="col-md chucnangtop">
                 <button type="button" onclick="submitForm()" class="btnsearchtop"><i class="fa fa-search"></i> Tìm kiếm</button>
+                
             </div>
+            
         </div>
+        
         <div id="dynamicFilter" style="margin-top: 4px;" >
         
         </div>    
@@ -394,3 +406,108 @@ function formatDate(inputString){
     const formattedString = `${parts[2]}/${parts[1]}/${parts[0]}`
     return formattedString
 }
+
+
+async function saveFilter() {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+        alert("Bạn cần đăng nhập để lưu bộ lọc.");
+        window.location.href = "login";
+        return;
+    }
+
+    // Lấy giá trị từ các input HTML
+    const loaiPhong = document.getElementById("danhsachloaiphongtimkiem")?.value || null;
+    const khoangGia = document.querySelector('select[name="khoanggia"]')?.value || null;
+    const dientich = document.querySelector('select[name="dientich"]')?.value || null;
+
+    // Lấy giá trị từ các checkbox
+    const tv = document.getElementById("tv")?.checked ? 1 : 0;
+    const fridge = document.getElementById("fridge")?.checked ? 1 : 0;
+    const bed = document.getElementById("bed")?.checked ? 1 : 0;
+    const airConditioner = document.getElementById("airConditioner")?.checked ? 1 : 0;
+    const heater = document.getElementById("heater")?.checked ? 1 : 0;
+    const washingMachine = document.getElementById("washingMachine")?.checked ? 1 : 0;
+    const kitchen = document.getElementById("kitchen")?.checked ? 1 : 0;
+
+
+
+    const wifi = document.getElementById("wifi")?.checked ? 1 : 0;
+    const parking = document.getElementById("parking")?.checked ? 1 : 0;
+    const closedWc = document.getElementById("closedWc")?.checked ? 1 : 0;
+    const numberOfPeople = document.getElementById("numberOfPeople")?.value || null;
+
+    const khuvucTinh = document.querySelector('select[name="khuvuctinh"]')?.value || null;
+    const khuvucHuyen = document.querySelector('select[name="khuvuchuyen"]')?.value || null;
+    const khuvucXa = document.querySelector('select[name="khuvucxa"]')?.value || null;
+
+    const direction = document.querySelector('select[name="direction"]')?.value || null; // Hướng nhà
+    const numberOfRoom = document.getElementById("numberOfRoom")?.value || null; // Số phòng
+    const numberOfWc = document.getElementById("numberOfWc")?.value || null; // Số WC
+    const frontWidth = document.getElementById("frontWidth")?.value || null; // Mặt tiền
+    const service = document.getElementById("service")?.checked ? 1 : 0;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const startDateFrom = urlParams.get('startDate');
+    const startDateTo = urlParams.get('endDate');
+
+    console.log("Start Date From:", startDateFrom);
+    console.log("Start Date To:", startDateTo);
+    const categoryId = loaiPhong;
+
+    const userId = sessionStorage.getItem("userId");
+
+    const filterData = {
+        categoryId,
+        minPrice: khoangGia.split("-")[0],
+        maxPrice: khoangGia.split("-")[1],
+        minArea: dientich.split("-")[0],
+        maxArea: dientich.split("-")[1],
+        provinceId: khuvucTinh,
+        districtId: khuvucHuyen,
+        wardId: khuvucXa,
+        tv,
+        fridge,
+        bed,
+        airConditioner,
+        heater,
+        washingMachine,
+        kitchen,
+        wifi,
+        parking,
+        closedWc,
+        numberOfPeople,
+        direction,
+        numberOfRoom,
+        numberOfWc,
+        frontWidth,
+        service,
+        startDateFrom, // Ngày bắt đầu từ
+        startDateTo, // Ngày kết thúc đến
+        userId
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/api/public/saveFilter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(filterData)
+        });
+
+        if (response.ok) {
+            alert("Đã lưu bộ lọc thành công!");
+        } else {
+            const result = await response.json();
+            alert("Không thể lưu bộ lọc: " + (result.message || response.status));
+        }
+    } catch (error) {
+        console.error('Lỗi khi lưu bộ lọc:', error);
+        alert("Đã có lỗi xảy ra khi lưu bộ lọc.");
+    }
+}
+
+
+

@@ -140,7 +140,7 @@ async function loadDataApi() {
                         "type": "checkbox"
                     },
                     {
-                        "id": "Heater",
+                        "id": "heater",
                         "value": "Bình nóng lạnh",
                         "type": "checkbox"
                     },

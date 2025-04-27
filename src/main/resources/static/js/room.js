@@ -84,6 +84,12 @@ async function loadChiTietPhong() {
         console.log(room, 'aaaaa')
         document.getElementById("tenphongchitiet").innerHTML = room.titleRoom
         document.getElementById("diachiphong").innerHTML = room.street+", "+room.wards.name+", "+room.wards.districts.name+", "+room.wards.districts.province.name
+        // Tạo địa chỉ đầy đủ và encode để nhúng bản đồ
+        let diaChiDayDu = room.street + ", " + room.wards.name + ", " + room.wards.districts.name + ", " + room.wards.districts.province.name;
+        let diaChiEncoded = encodeURIComponent(diaChiDayDu);
+        let iframeMap = document.getElementById("map-frame");
+        iframeMap.src = `https://www.google.com/maps?q=${diaChiEncoded}&output=embed`;
+
         document.getElementById("giatienctphong").innerHTML = tinhTienThang(room.price)
         document.getElementById("dtphongct").innerHTML = room.area
         document.getElementById("ngaydangct").innerHTML = room.createdDate
@@ -163,15 +169,15 @@ async function loadChiTietPhong() {
         }
         if (room?.numberOfPeople) {
             document.getElementsByClassName("numberOfPeople")[0].style.display = "block"
-            document.getElementById("numberOfPeople").innerHTML = room.numberOfPeople + "người"
+            document.getElementById("numberOfPeople").innerHTML = room.numberOfPeople + " người"
         }
         if (room?.numberOfRoom) {
             document.getElementsByClassName("numberOfRoom")[0].style.display = "block"
-            document.getElementById("numberOfRoom").innerHTML = room.numberOfRoom + "phòng"
+            document.getElementById("numberOfRoom").innerHTML = room.numberOfRoom + " phòng"
         }
         if (room?.numberOfWc) {
             document.getElementsByClassName("numberOfWc")[0].style.display = "block"
-            document.getElementById("numberOfWc").innerHTML = room.numberOfWc + "phòng"
+            document.getElementById("numberOfWc").innerHTML = room.numberOfWc + " phòng"
         }
         if (room?.startDate) {
             document.getElementsByClassName("startDate")[0].style.display = "block"
@@ -205,12 +211,12 @@ async function loadChiTietPhong() {
             else
                 document.getElementById("fridge").innerHTML = " Không"
         }
-        if (room?.Heater){
-            document.getElementsByClassName("Heater")[0].style.display = "block"
-            if (room.Heater == "1")
-                document.getElementById("Heater").innerHTML = " Có"
+        if (room?.heater){
+            document.getElementsByClassName("heater")[0].style.display = "block"
+            if (room.heater == "1")
+                document.getElementById("heater").innerHTML = " Có"
             else
-                document.getElementById("Heater").innerHTML = " Không"
+                document.getElementById("heater").innerHTML = " Không"
         }
         if (room?.tv){
             document.getElementsByClassName("tv")[0].style.display = "block"
