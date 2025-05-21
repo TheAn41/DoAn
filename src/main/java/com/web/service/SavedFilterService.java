@@ -50,13 +50,10 @@ public class SavedFilterService {
         if (filter.getHeater() != null && !filter.getHeater().equals(room.getHeater())) return false;
         if (filter.getWashingMachine() != null && !filter.getWashingMachine().equals(room.getWashingMachine())) return false;
         if (filter.getKitchen() != null && !filter.getKitchen().equals(room.getKitchen())) return false;
-
         if (filter.getWifi() != null && !filter.getWifi().equals(room.getWifi())) return false;
         if (filter.getParking() != null && !filter.getParking().equals(room.getParking())) return false;
         if (filter.getClosedWc() != null && !filter.getClosedWc().equals(room.getClosedWc())) return false;
-
         if (filter.getNumberOfPeople() != null && room.getNumberOfPeople() > filter.getNumberOfPeople()) return false;
-
         if (filter.getNumberOfRoom() != null && room.getNumberOfRoom() > filter.getNumberOfRoom()) return false;
         if (filter.getNumberOfWc() != null  && room.getNumberOfWc() > filter.getNumberOfWc()) return false;
         if (filter.getDirection() != null && !filter.getDirection().equals(room.getDirection())) return false;

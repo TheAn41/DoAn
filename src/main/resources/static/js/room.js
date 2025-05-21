@@ -1,4 +1,4 @@
-var sizeTrangChu = 4;
+var sizeTrangChu = 5;
 
 async function phongTrangChu(page) {
     var url = 'http://localhost:8080/api/public/dsphongTrangChu?size='+sizeTrangChu +'&page='+page;

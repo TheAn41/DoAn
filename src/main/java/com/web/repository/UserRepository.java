@@ -53,7 +53,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("select count(u.id) from User u where u.username = ?1")
     public Double countUserByUserName(String username);
 
-    @Query(value = "select u.* from user u inner join user_authority a on a.user_id = u.id where a.authority_name = ?1",nativeQuery = true)
+    @Query(value = "select u.* from user u inner join user_authority a on a.user_id = u.id where a.authority_name = ?1 ",nativeQuery = true)
     List<User> getUserByRole(String role);
 
 }

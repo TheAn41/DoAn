@@ -272,10 +272,10 @@ function  validForm(room) {
         message += "Hướng nhà không được để trống, "
     if (room?.frontWidth == null && $("#frontWidth").length > 0 )
         message += "Diện tích mặt tiền không được để trống, "
-    if (document.getElementById('anhbiass').files.length == 0)
-        message += "Phải thêm ít nhất 1 ảnh chi tiết phòng, "
-    if (document.getElementById('choosefile').files.length == 0)
-        message += "Phải thêm ít nhất 1 ảnh bìa"
+    // if (document.getElementById('anhbiass').files.length == 0)
+    //     message += "Phải thêm ít nhất 1 ảnh chi tiết phòng, "
+    // if (document.getElementById('choosefile').files.length == 0)
+    //     message += "Phải thêm ít nhất 1 ảnh bìa"
 
     return  message
 
@@ -328,22 +328,35 @@ async function test_themPhong() {
 
 
 async function loadPhongCuaToi() {
-    debugger
+    debugger;
+
+    // Hủy DataTable cũ
     $('#example').DataTable().destroy();
+
+    // Lấy trạng thái từ dropdown
     var trangthai = document.getElementById("trangthaiphonglist").value;
     var urladd = 'http://localhost:8080/api/user/phongCuaToi';
     if (trangthai > 0) {
         urladd = 'http://localhost:8080/api/user/phongCuaToi?id=' + trangthai;
     }
+
+    // Gọi API
     const response = await fetch(urladd, {
         method: 'GET',
         headers: new Headers({
             'Authorization': 'Bearer ' + token
         })
     });
+
+    // Parse dữ liệu
     var list = await response.json();
-    var main = ''
-    for (i = 0; i < list.length; i++) {
+
+    // ✅ Sắp xếp danh sách theo ID giảm dần
+    list.sort((a, b) => b.id - a.id);
+
+    // Render HTML
+    var main = '';
+    for (let i = 0; i < list.length; i++) {
         main += `<tr>
                     <td>${list[i].id}</td>
                     <td><img src="${list[i].banner}" class="anhphongqltin"></td>
@@ -353,11 +366,18 @@ async function loadPhongCuaToi() {
                     <td>${list[i].statusRoom.name}</td>
                     <td><a href="dangtin?id=${list[i].id}" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></td>
                     <td><a onclick="xoaPhong(${list[i].id})" class="btn btn-danger"><i class="fa fa-trash"></i> Xóa</a></td>
-                </tr>`
+                </tr>`;
     }
-    document.getElementById("listphong").innerHTML = main
-    $('#example').DataTable();
+
+    // Gán vào bảng
+    document.getElementById("listphong").innerHTML = main;
+
+    // ✅ Khởi tạo lại DataTable với sắp xếp theo ID giảm dần (cột đầu tiên)
+    $('#example').DataTable({
+        "order": [[0, "desc"]]
+    });
 }
+
 
 
 async function loadChiTietPhong() {
@@ -483,6 +503,7 @@ async function xoaPhong(id) {
             });
     }
 }
+
 
 async function xoaAnhPhong(id) {
     var con = confirm("Bạn chắc chắn muốn xóa ảnh này!")

@@ -65,21 +65,25 @@ function formatmoney(money) {
 
 async function loadLichSuNap() {
     $('#example').DataTable().destroy();
-    var start = document.getElementById("start").value
-    var end = document.getElementById("end").value
+    var start = document.getElementById("start").value;
+    var end = document.getElementById("end").value;
     var url = 'http://localhost:8080/api/admin/all-history-pay';
-    if(start != "" && end != ""){
-        url = 'http://localhost:8080/api/admin/all-history-pay?start='+start+'&end='+end;
+    if (start !== "" && end !== "") {
+        url += '?start=' + start + '&end=' + end;
     }
+
     const response = await fetch(url, {
         method: 'GET',
         headers: new Headers({
             'Authorization': 'Bearer ' + token
         })
     });
-    var list = await response.json();
-    var main = '';
-    for (i = 0; i < list.length; i++) {
+
+    const list = await response.json();
+    let main = '';
+    let total = 0;
+
+    for (let i = 0; i < list.length; i++) {
         main += `<tr>
                     <td>${list[i].createdTime}<br>${list[i].createdDate}</td>
                     <td>${list[i].orderId}</td>
@@ -87,9 +91,51 @@ async function loadLichSuNap() {
                     <td>${formatmoney(list[i].totalAmount)}</td>
                     <td>Đã nhận</td>
                     <td>${list[i].user.username}</td>
-                </tr>`
+                </tr>`;
+        total += list[i].totalAmount;
     }
-    document.getElementById("listichsu").innerHTML = main
+
+    document.getElementById("listichsu").innerHTML = main;
+    document.getElementById("tongDoanhThu").innerText = formatmoney(total) + " đ";
     $('#example').DataTable();
+}
+function formatmoney(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function exportToExcel() {
+    let table = document.getElementById("example");
+    let wb = XLSX.utils.table_to_book(table, { sheet: "Lịch sử nạp" });
+    XLSX.writeFile(wb, "lich_su_nap.xlsx");
+}
+async function exportToPDF() {
+    const { jsPDF } = window.jspdf;
+    let doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Lịch sử nạp tiền", 14, 20);
+
+    const table = document.getElementById("example");
+    const headers = [];
+    const data = [];
+
+    // Lấy header
+    const headerCells = table.querySelectorAll("thead th");
+    headerCells.forEach(th => headers.push(th.innerText));
+
+    // Lấy dữ liệu
+    const rows = table.querySelectorAll("tbody tr");
+    rows.forEach(tr => {
+        const row = [];
+        tr.querySelectorAll("td").forEach(td => row.push(td.innerText.trim()));
+        data.push(row);
+    });
+
+    doc.autoTable({
+        head: [headers],
+        body: data,
+        startY: 30
+    });
+
+    doc.save("lich_su_nap.pdf");
 }
 

@@ -38,42 +38,55 @@ async function loadAllBlog() {
 }
 
 
-async function setViPham(id, type, e) {
-    var str = "Bạn muốn khóa bài viết này?";
-    var tb = "Đã khóa bài viết vi phạm thành công";
-    if(type == 2){
-        str = "Bạn muốn mở khóa bài viết này?";
-        tb = "Đã khôi phục bài viết đã khóa";
-    }
-    var con = confirm(str);
-    if(con){
-        var url = 'http://localhost:8080/api/admin/khoaBaiViet?id=' + id;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: new Headers({
-                'Authorization': 'Bearer ' + token
+function setViPham(id, type, e) {
+    var str = (type == 1) ? "Bạn muốn khóa bài viết này?" : "Bạn muốn mở khóa bài viết này?";
+    var tb = (type == 1) ? "Đã khóa bài viết vi phạm thành công" : "Đã khôi phục bài viết đã khóa";
+
+    swal({
+        title: "Xác nhận",
+        text: str,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Hủy bỏ"
+    }, function(isConfirm) {
+        if (isConfirm) {
+            // Nếu xác nhận
+            fetch('http://localhost:8080/api/admin/khoaBaiViet?id=' + id, {
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + token
+                })
             })
-        });
-        if (response.status < 300) {
-            swal({
-                title: "Thông báo", 
-                text: tb, 
-                type: "success"
-              },
-            function(){ 
-                window.location.reload();
-            });
+                .then(response => {
+                    if (response.status < 300) {
+                        swal({
+                            title: "Thông báo",
+                            text: tb,
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Thao tác thất bại",
+                            type: "error"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                });
+        } else {
+            // Người dùng bấm Hủy → reload để checkbox giữ nguyên trạng thái ban đầu
+            window.location.reload();
         }
-    }
-    else{
-        if(type == 1){
-            e.checked = false
-        }
-        if(type == 2){
-            e.checked = true
-        }
-    }
+    });
 }
+
+
+
 
 async function saveBlog() {
     document.getElementById("loading").style.display = 'block'
@@ -164,31 +177,43 @@ async function loadABlog() {
 
 
 async function deleteBlog(id) {
-    var url = 'http://localhost:8080/api/admin/deleteBlog?id=' + id;
-    const response = await fetch(url, {
-        method: 'DELETE',
-        headers: new Headers({
-            'Authorization': 'Bearer ' + token
-        })
+    swal({
+        title: "Xác nhận",
+        text: "Bạn có chắc muốn xóa bài viết này?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Có, xóa!",
+        cancelButtonText: "Hủy bỏ",
+        closeOnConfirm: false,
+        closeOnCancel: true
+    }, async function (isConfirm) {
+        if (isConfirm) {
+            var url = 'http://localhost:8080/api/admin/deleteBlog?id=' + id;
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + token
+                })
+            });
+
+            if (response.status < 300) {
+                swal({
+                    title: "Thông báo",
+                    text: "Xóa bài viết thành công!",
+                    type: "success"
+                }, function () {
+                    window.location.reload();
+                });
+            } else {
+                swal({
+                    title: "Thông báo",
+                    text: "Không thể xóa bài viết",
+                    type: "error"
+                }, function () {
+                    window.location.reload();
+                });
+            }
+        }
     });
-    if (response.status < 300) {
-        swal({
-            title: "Thông báo", 
-            text: "xóa bài viết thành công!", 
-            type: "success"
-          },
-        function(){ 
-            window.location.reload();
-        });
-    }
-    else {
-        swal({
-            title: "Thông báo", 
-            text: "không thể xóa bài viết", 
-            type: "error"
-          },
-        function(){ 
-            window.location.reload();
-        });
-    }
 }

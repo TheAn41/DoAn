@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface SavedFilterRepository extends JpaRepository<SavedFilter, Long> {
     List<SavedFilter> findByUserId(Long userId);
+
+    void deleteByUserId(Long userId);
+
+    void deleteById(Long id);
 }

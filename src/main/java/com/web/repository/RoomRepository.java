@@ -16,10 +16,10 @@ import java.util.List;
 
 public interface RoomRepository  extends JpaRepository<Room, Long> {
 
-    @Query("select r from Room r where r.user.id = ?1")
+    @Query("select r from Room r where r.user.id = ?1 order by r.id desc")
     public List<Room> findByUser(Long userId);
 
-    @Query("select r from Room r where r.user.id = ?1 and r.statusRoom.id = ?2")
+    @Query("select r from Room r where r.user.id = ?1 and r.statusRoom.id = ?2 order by r.id desc ")
     public List<Room> findByUserAndTrangThai(Long userId, Long trangThai);
 
     @Query("select r from Room r order by r.id desc ")

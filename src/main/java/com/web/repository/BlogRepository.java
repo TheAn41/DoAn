@@ -1,5 +1,6 @@
 package com.web.repository;
 
+import com.web.dto.BaiVietTheoNgayDTO;
 import com.web.entity.Blog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,5 +25,10 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 
     @Query(value = "select b from Blog b where b.viPham = 0 order by b.id desc ")
     public Page<Blog> tinTucNguoiDung(Pageable pageable);
+
+    @Query("SELECT new com.web.dto.BaiVietTheoNgayDTO(" +
+            "FUNCTION('DAYNAME', b.createdDate), COUNT(b)) " +
+            "FROM Blog b GROUP BY FUNCTION('DAYNAME', b.createdDate)")
+    List<BaiVietTheoNgayDTO> thongKeTheoThu();
 }
 

@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,7 +21,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
+@Transactional
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -97,13 +98,13 @@ public class SavedFilterController {
                         .parking(dto.getParking())
                         .closedWc(dto.getClosedWc())
                         .numberOfPeople(dto.getNumberOfPeople())
-                        .direction(oldFilter.getDirection()) // Giữ nguyên hướng nhà cũ
-                        .numberOfRoom(oldFilter.getNumberOfRoom()) // Giữ nguyên số phòng cũ
-                        .numberOfWc(oldFilter.getNumberOfWc()) // Giữ nguyên số WC cũ
-                        .frontWidth(oldFilter.getFrontWidth()) // Giữ nguyên mặt tiền cũ
-                        .service(oldFilter.getService()) // Giữ nguyên dịch vụ cũ
-                        .user(oldFilter.getUser ()) // giữ nguyên user cũ
-                        .createdDate(oldFilter.getCreatedDate()) // giữ nguyên ngày tạo
+                        .direction(dto.getDirection())
+                        .numberOfRoom(dto.getNumberOfRoom())
+                        .numberOfWc(dto.getNumberOfWc())
+                        .frontWidth(dto.getFrontWidth())
+                        .service(dto.getService())
+                        .user(oldFilter.getUser ())
+                        .createdDate(oldFilter.getCreatedDate())
                         .build();
             }
             SavedFilter savedFilter = filterRepository.save(filter);
@@ -113,13 +114,19 @@ public class SavedFilterController {
         }
     }
 
-
-
-
-    // Lấy tất cả bộ lọc của 1 user
-    @GetMapping("/user/{userId}")
+    @GetMapping("public/getFilterByUser/{userId}")
     public List<SavedFilter> getFiltersByUser(@PathVariable Long userId) {
         return filterRepository.findByUserId(userId);
+    }
+
+    @DeleteMapping("/user/deleteFilterByUserId/{userId}")
+    public void deleteByUserId(@PathVariable Long userId) {
+        filterRepository.deleteByUserId(userId);
+    }
+
+    @DeleteMapping("/user/deleteFilterById/{id}")
+    public void deleteById(@PathVariable Long id) {
+        filterRepository.deleteById(id);
     }
 
 }

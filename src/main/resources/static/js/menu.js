@@ -187,6 +187,7 @@ function loadFormTimKiem(){
         btn = `
     <div style="float: right; display: flex; gap: 10px;">
         <button id="saveFilterButton" class="btn btn-success btn-sm" type="button" onclick="saveFilter()">Lưu bộ lọc</button>
+        <button id="deleteAllFiltersButton" class="btn btn-danger btn-sm" type="button" onclick="deleteAllFilters()">Xoá tất cả bộ lọc</button>
         <button id="filterButton" class="btn btn-secondary btn-sm" type="button" onclick="showFilter()">Thêm chi tiết lọc</button>
     </div>`
     }else {
@@ -498,7 +499,7 @@ async function saveFilter() {
         });
 
         if (response.ok) {
-            alert("Đã lưu bộ lọc thành công!");
+            alert("Đã lưu bộ lọc thành công!, Bạn sẽ nhận được email thông báo khi có phòng mới phù hợp với tiêu chí của bạn");
         } else {
             const result = await response.json();
             alert("Không thể lưu bộ lọc: " + (result.message || response.status));
@@ -508,6 +509,55 @@ async function saveFilter() {
         alert("Đã có lỗi xảy ra khi lưu bộ lọc.");
     }
 }
+async function deleteAllFilters() {
+    const token = sessionStorage.getItem("token");
+    const userId = localStorage.getItem("user_id");
+
+    if (!token || !userId) {
+        alert("Bạn cần đăng nhập để xoá bộ lọc.");
+        window.location.href = "login";
+        return;
+    }
+
+    // Kiểm tra xem user có bộ lọc nào không
+    try {
+        const checkResponse = await fetch(`http://localhost:8080/api/public/getFilterByUser/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        const filters = await checkResponse.json();
+
+        if (!filters || filters.length === 0) {
+            alert("Bạn chưa lưu bộ lọc nào. Hãy lưu bộ lọc để nhận thông báo khi có phòng mới.");
+            return;
+        }
+
+        const confirmDelete = confirm("Bạn có chắc muốn xoá tất cả bộ lọc?");
+        if (!confirmDelete) return;
+
+        const deleteResponse = await fetch(`http://localhost:8080/api/user/deleteFilterByUserId/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        if (deleteResponse.ok) {
+            alert("Đã xoá tất cả bộ lọc.");
+            // Gọi lại loadFilter() nếu cần cập nhật UI
+        } else {
+            alert("Xoá thất bại.");
+        }
+
+    } catch (error) {
+        console.error("Lỗi kiểm tra/xoá bộ lọc:", error);
+        alert("Đã xảy ra lỗi.");
+    }
+}
+
 
 
 

@@ -13,6 +13,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
 <link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
@@ -27,8 +30,25 @@
         demSoLuongBaiViet();
         demSoLuongTk();
         demSoLuongPhong();
+        loadBaiVietChart();
+        loadDoanhThuThang();
     }
 </script>
+    <style>
+
+        .card-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+    </style>
 </head>
 <body class="sb-nav-fixed">
     <nav id="top" class="sb-topnav navbar navbar-expand navbar-dark bg-dark"></nav>
@@ -37,7 +57,7 @@
         <div id="layoutSidenav_content">
             <main class="main">
                 <div class="main-component">
-                    <div class="col-md-9 animated bounce">
+                    <div class="col-md-12 animated bounce">
                         <div class="d-flex align-items-center mb-4 pb-4 border-bottom">
                             <div class="ms-3">
                                 <img alt="" src="../image/lich.png">
@@ -51,55 +71,110 @@
                                 </p>
                             </div>
                         </div>
-            
-                        <h2 class="page-header" style="margin-top: 20px;">Thông báo</h2>
-                        <p style="font-size: 26px">Bạn có:
-                        <p>
-                        <ul class="list-group">
-                            <li onclick="loadAllContact()" data-bs-toggle="modal" data-bs-target="#modeltb" class="list-group-item d-flex justify-content-between align-items-center" id="lienHeMoi"><img
-                                    alt="" src="../image/lienhe.png" style="margin-right: 10px;"> <a href="#"
-                                    style="font-size: 20px; font-family: 'auto'; color: #286090"> <b>
-                                        Thông báo</b></a> <span
-                                    style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; background-color: #740025;margin-top: 3.5px;padding-top: 5px;"
-                                    class="badge bg-primary rounded-pill">
-                                    <span id="demchuaxem">0</span></li>
-                        </ul>
-                        <div class="thongke">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="thongke1">
-                                        <div class="texts">Số lượng phòng</div>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-3">
+                                <div class="card text-white bg-success">
+                                    <div class="card-body">
                                         <div>
+                                            <h5 class="card-title">Tổng số phòng</h5>
+                                            <p class="card-text fs-4" id="soluongphong">...</p>
                                         </div>
-                                        <div class="soluong">
-                                            <b id="soluongphong"></b>
-                                        </div>
+
+                                        <i class="bi bi-house-fill card-icon"></i>
                                     </div>
+
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="thongke2">
-                                        <div class="texts">Số lượng bài viết</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-white bg-info">
+                                    <div class="card-body">
                                         <div>
+                                            <h5 class="card-title">Tổng bài viết</h5>
+                                            <p class="card-text fs-4" id="soLuongbv">...</p>
                                         </div>
-                                        <div class="soluong">
-                                            <b id="soLuongbv"></b>
-                                        </div>
+                                        <i class="bi bi-file-earmark-text card-icon"></i>
                                     </div>
+
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="thongke3">
-                                        <div class="texts">Số lượng tài khoản</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-white bg-warning">
+                                    <div class="card-body">
                                         <div>
+                                            <h5 class="card-title">Tài khoản</h5>
+                                            <p class="card-text fs-4" id="soLuongTk">...</p>
                                         </div>
-                                        <div class="soluong">
-                                            <b id="soLuongTk"></b>
+
+                                        <i class="bi bi-person-fill card-icon"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-white bg-danger" role="button" onclick="loadAllContact()" data-bs-toggle="modal" data-bs-target="#modeltb">
+                                    <div class="card-body">
+                                        <div>
+                                            <h5 class="card-title">Thông báo mới</h5>
+                                            <p class="card-text fs-4" id="demchuaxem">...</p>
                                         </div>
+
+                                        <i class="bi bi-bell-fill card-icon"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="container mt-4">
+                            <div class="row mt-4">
+                                <div class="col-md-3">
+                                    <label for="yearSelect">Chọn năm</label>
+                                    <select id="yearSelect" class="form-control" onchange="loadDoanhThuThang()">
+                                        <option value="2025">2025</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-4">
+                                <h2 class="card-title">Biểu đồ doanh thu theo tháng</h2>
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <canvas id="doanhThuChart"></canvas>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <br><br><hr>
+                            <div class="col-md-12">
+                                <h2 class="card-title">Biểu đồ số phòng đang đăng cho thuê theo tỉnh</h2>
+                                <div class="card">
+                                    <div class="card-body">
 
-                        <br><br><hr><h5>Số lượng phòng trong các tỉnh</h5>
+                                        <canvas id="phongTheoTinh"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <h2 class="card-title">Biểu đồ phân bố bài viết theo thứ trong tuần</h2>
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <canvas id="baiVietChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+
+
+
+                        <br><br><hr>
+
+                                <h5>Số lượng phòng trong các tỉnh</h5>
                         <table id="example" class="table table-striped">
                             <thead>
                                 <tr>
@@ -119,7 +194,7 @@
             </main>
         </div>
     </div>
-    
+
 
     <div class="modal" id="modeltb" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
         <div class="modal-dialog modal-xl">
@@ -155,4 +230,97 @@
     $('#example').DataTable();
     $('#thongbao').DataTable();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function loadChartData() {
+        fetch('http://localhost:8080/api/admin/soLuongPhongCacTinh')
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.tenTinh);
+                const values = data.map(item => item.soLuongPhong);
+
+                const ctx = document.getElementById('phongTheoTinh').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Số lượng phòng',
+                            data: values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                            
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
+    }
+
+    // Gọi trực tiếp hàm sau khi thẻ canvas đã xuất hiện
+    loadChartData();
+</script>
+<script>
+    function drawLineChartBaiViet(data) {
+        const labels = data.map(item => item.thu);
+        const values = data.map(item => item.soLuong);
+
+        const ctx = document.getElementById('baiVietChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Bài viết',
+                    data: values,
+                    borderColor: 'rgba(0, 102, 255, 1)',
+                    backgroundColor: 'rgba(0, 102, 255, 0.2)',
+                    fill: true,
+                    borderWidth: 3,
+                    tension: 0.4, // độ cong đường
+                    pointRadius: 4,
+                    pointBackgroundColor: 'rgba(0, 102, 255, 1)',
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            boxWidth: 20
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 2
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Gọi API và vẽ biểu đồ
+    function loadBaiVietChart() {
+        $.get('http://localhost:8080/api/admin/soLuongBaiVietTheoNgay', function(data) {
+            drawLineChartBaiViet(data);
+        });
+    }
+</script>
+
 </html>

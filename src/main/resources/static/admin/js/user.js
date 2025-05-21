@@ -66,41 +66,50 @@ async function loadAllRole() {
 
 
 async function lockOrUnlock(id, type) {
-    var url = 'http://localhost:8080/api/admin/activeUser?id=' + id;
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: new Headers({
-            'Authorization': 'Bearer ' + token
-        })
+    var actionText = (type == 1) ? 'khóa' : 'mở khóa';
+
+    swal({
+        title: "Xác nhận",
+        text: "Bạn có chắc muốn " + actionText + " người dùng này?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Có, " + actionText + "!",
+        cancelButtonText: "Hủy bỏ",
+        closeOnConfirm: false,
+        closeOnCancel: true
+    }, async function (isConfirm) {
+        if (isConfirm) {
+            var url = 'http://localhost:8080/api/admin/activeUser?id=' + id;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + token
+                })
+            });
+
+            if (response.status < 300) {
+                var mess = (type == 1) ? 'Khóa thành công' : 'Mở khóa thành công';
+                swal({
+                    title: "Thông báo",
+                    text: mess,
+                    type: "success"
+                }, function () {
+                    window.location.reload();
+                });
+            } else {
+                swal({
+                    title: "Thông báo",
+                    text: "Hành động thất bại",
+                    type: "error"
+                }, function () {
+                    window.location.reload();
+                });
+            }
+        }
     });
-    if (response.status < 300) {
-        var mess = '';
-        if(type == 1){
-            mess = 'Khóa thành công'
-        }
-        else{
-            mess = 'Mở khóa thành công'
-        }
-        swal({
-            title: "Thông báo", 
-            text: mess, 
-            type: "success"
-          },
-        function(){ 
-            window.location.reload();
-        });
-    }
-    else {
-        swal({
-            title: "Thông báo", 
-            text: "hành động thất bại", 
-            type: "error"
-          },
-        function(){ 
-            window.location.reload();
-        });
-    }
 }
+
 
 async function addtk() {
     var url = 'http://localhost:8080/api/admin/addAdmin'

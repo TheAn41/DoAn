@@ -1,8 +1,8 @@
 function themYeuThich(idphong){
     const user_id = localStorage.getItem("user_id");
-
+    const token = sessionStorage.getItem("token");
     // Nếu chưa đăng nhập, chuyển sang trang đăng nhập
-    if (!user_id || user_id.trim() === "" || user_id === "undefined" || user_id === "null") {
+    if (!token) {
         swal({
             title: "Bạn chưa đăng nhập",
             text: "Vui lòng đăng nhập để sử dụng tính năng yêu thích!",
@@ -41,10 +41,11 @@ function themYeuThich(idphong){
 
 async function loadYeuThich() {
     const user_id = localStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
     const container = document.getElementById("danhsachcacphong");
 
     // Nếu chưa đăng nhập
-    if (!user_id || user_id === "undefined") {
+    if (!token) {
         container.innerHTML = `
             <div class="alert alert-info">
                 <strong>Thông báo:</strong> Bạn cần <a href="login">đăng nhập</a> để xem các phòng đã yêu thích.

@@ -19,7 +19,14 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
 <script src="js/main.js"></script>
 <script src="js/doanhthu.js"></script>
-<script>
+    <!-- SheetJS (Excel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- jsPDF & autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
     window.onload = function(){
         loadLichSuNap();
     }
@@ -41,9 +48,14 @@
                             <label>Đến ngày</label>
                             <input type="date" class="form-control" id="end">
                         </div>
-                        <div class="col-md-3"><br>
+                        <div class="col-md-6"><br>
                             <button onclick="loadLichSuNap()" class="btn btn-primary"><i class="fa fa-filter"></i> Lọc</button>
+                            <button onclick="exportToExcel()" class="btn btn-success"><i class="fa fa-file-excel"></i> Xuất Excel</button>
+                            <button onclick="exportToPDF()" class="btn btn-danger"><i class="fa fa-file-pdf"></i> Xuất PDF</button>
                         </div>
+                    </div>
+                    <div class="col-sm-12 mt-3">
+                        <h5 class="text-end">Tổng doanh thu: <span id="tongDoanhThu" class="text-danger fw-bold">0 đ</span></h5>
                     </div>
                 </div>
                 <div class="col-sm-12 divtale">
@@ -74,5 +86,7 @@
         </div>
     </div>
     <script>$('#example').DataTable()</script>
+
+
 </body>
 </html>

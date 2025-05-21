@@ -1,7 +1,9 @@
 package com.web.rest;
 
+import com.web.dto.BaiVietTheoNgayDTO;
 import com.web.entity.Blog;
 import com.web.repository.BlogRepository;
+import com.web.service.BlogService;
 import com.web.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,12 @@ public class BlogController {
 
     @Autowired
     private UserService userService;
+
+    private final BlogService blogService;
+
+    public BlogController(BlogService blogService) {
+        this.blogService = blogService;
+    }
 
     @PostMapping("/all/addBlog")
     public void save(@RequestBody Blog blog){
@@ -94,7 +102,6 @@ public class BlogController {
     @GetMapping("/public/baiVietMoiNhat")
     public List<Blog> baiDangMoiNhat(){
 
-        logger.info("Hoang Trungg Kiet");
         return blogRepository.baiVietMoiNhat();
     }
 
@@ -116,5 +123,10 @@ public class BlogController {
             blogRepository.save(blog);
             return;
         }
+    }
+
+    @GetMapping("/admin/soLuongBaiVietTheoNgay")
+    public List<BaiVietTheoNgayDTO> thongKeTheoNgay() {
+        return blogService.thongKeBaiVietTheoThu();
     }
 }

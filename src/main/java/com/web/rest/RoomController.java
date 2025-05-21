@@ -310,19 +310,16 @@ public class RoomController {
     }
 
     public static List<Room> findClosestRoom(List<Room> roomList, Room roomTarget, int numberOfHouses) {
-        Collections.sort(roomList, new Comparator<Room>() {
-            @Override
-            public int compare(Room h1, Room h2) {
-                double price1 = Math.abs(h1.getPrice() - roomTarget.getPrice());
-                double price2 = Math.abs(h2.getPrice() - roomTarget.getPrice());
+        Collections.sort(roomList, (h1, h2) -> {
+            double price1 = Math.abs(h1.getPrice() - roomTarget.getPrice());
+            double price2 = Math.abs(h2.getPrice() - roomTarget.getPrice());
 
-                double area1 = Math.abs(h1.getArea() - roomTarget.getArea());
-                double area2 = Math.abs(h2.getArea() - roomTarget.getArea());
+            double area1 = Math.abs(h1.getArea() - roomTarget.getArea());
+            double area2 = Math.abs(h2.getArea() - roomTarget.getArea());
 
-                double r1 =  1.23 * price1/roomTarget.getPrice() + 1.12 * area1/roomTarget.getArea();
-                double r2 =  1.23 * price2/roomTarget.getPrice() + 1.12 * area2/roomTarget.getArea();
-                return Double.compare(r1, r2);
-            }
+            double r1 =  1.23 * price1/roomTarget.getPrice() + 1.12 * area1/roomTarget.getArea();
+            double r2 =  1.23 * price2/roomTarget.getPrice() + 1.12 * area2/roomTarget.getArea();
+            return Double.compare(r1, r2);
         });
 
         return roomList.subList(0, Math.min(numberOfHouses, roomList.size()));

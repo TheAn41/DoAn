@@ -54,7 +54,10 @@ async function loadAllRoom() {
                 </tr>`
     }
     document.getElementById("listroom").innerHTML = main
-    $('#example').DataTable();
+    // ✅ Khởi tạo lại DataTable với sắp xếp cột ID giảm dần
+    $('#example').DataTable({
+        "order": [[0, "desc"]] // 0 là index của cột ID
+    });
 }
 
 
@@ -109,13 +112,13 @@ async function khoaPhong(id, type, e) {
         });
         if (response.status < 300) {
             swal({
-                title: "Thông báo", 
-                text: tb, 
-                type: "success"
-              },
-            function(){ 
-                window.location.reload();
-            });
+                    title: "Thông báo",
+                    text: tb,
+                    type: "success"
+                },
+                function(){
+                    window.location.reload();
+                });
         }
     }
     else{
@@ -127,6 +130,8 @@ async function khoaPhong(id, type, e) {
         }
     }
 }
+
+
 
 async function soLuongPhongCacTinh() {
     $('#example').DataTable().destroy();

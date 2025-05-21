@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -44,6 +46,21 @@ public class HistoryPayController {
             list.add(tong);
         }
         return list;
+    }
+
+    @GetMapping("/admin/doanh-thu-theo-thang")
+    public List<Map<String, Object>> getDoanhThuTheoThang(@RequestParam int year) {
+        List<Object[]> result = historyPayRepository.getDoanhThuTheoThang(year);
+        List<Map<String, Object>> response = new ArrayList<>();
+
+        for (Object[] row : result) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("thang", row[0]);
+            map.put("doanhThu", row[1]);
+            response.add(map);
+        }
+
+        return response;
     }
 
 }
