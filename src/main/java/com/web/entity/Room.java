@@ -98,4 +98,6 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<ImageRoom> imageRooms;
+
+    private Integer rented ;
 }

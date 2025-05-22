@@ -79,6 +79,9 @@ async function loadYeuThich() {
         let html = "";
 
         for (let i = 0; i < list.length; i++) {
+            let trangThaiPhong = list[i].rented
+                ? '<span class="badge bg-success"><i class="fa fa-unlock"></i> Còn trống</span>'
+                : '<span class="badge bg-danger"><i class="fa fa-lock"></i> Đã cho thuê</span>';
             html += `
                 <div class="singleroom row">
                     <div class="col-sm-3 divanhphong">
@@ -91,6 +94,7 @@ async function loadYeuThich() {
                             <p class="dientichtro">${list[i].area}m²</p>
                             <p class="diachitro">${list[i].wards.districts.name}<br>${list[i].wards.districts.province.name}</p>
                             <p class="thoigiandangtro">${list[i].createdDate}<br>${list[i].createdTime}</p>
+                            <p class="trangthaiphong" style="margin-left: 10px;">${trangThaiPhong}</p>
                         </div>
                         
                         <div class="thongtinnguoidang">

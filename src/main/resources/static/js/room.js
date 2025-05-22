@@ -15,6 +15,10 @@ async function phongTrangChu(page) {
     for (i = 0; i < list.length; i++) {
         document.getElementById("textoke").innerHTML = list[i].description;
         var des = document.getElementById("textoke").textContent;
+
+        let trangThaiPhong = list[i].rented
+            ? '<span class="badge bg-success"><i class="fa fa-unlock"></i> Còn trống</span>'
+            : '<span class="badge bg-danger"><i class="fa fa-lock"></i> Đã cho thuê</span>';
         main += `<div class="singleroom row">
         <div class="col-sm-3 divanhphong">
             <a href="chitietphong?id=${list[i].id}"><img src="${list[i].banner}" class="anhroom"></a>
@@ -26,6 +30,8 @@ async function phongTrangChu(page) {
                 <p class="dientichtro">${list[i].area}m²</p>
                 <p class="diachitro">${list[i].wards.districts.name}<br>${list[i].wards.districts.province.name}</p>
                 <p class="thoigiandangtro">${list[i].createdDate}<br>${list[i].createdTime}</p>
+                <p class="trangthaiphong" style="margin-left: 10px;">${trangThaiPhong}</p>
+
             </div>
             <p class="motatro">${des}</p>
             <div class="thongtinnguoidang">
@@ -93,6 +99,7 @@ async function loadChiTietPhong() {
         document.getElementById("giatienctphong").innerHTML = tinhTienThang(room.price)
         document.getElementById("dtphongct").innerHTML = room.area
         document.getElementById("ngaydangct").innerHTML = room.createdDate
+        document.getElementById("trangthaiphongct").innerHTML = room.rented ? "Còn trống" : "Đã cho thuê";
         document.getElementById("matinct").innerHTML = "#"+room.id
         document.getElementById("loaitingiao").innerHTML = room.category.name
         document.getElementById("noidungmotact").innerHTML = room.description
@@ -298,6 +305,9 @@ async function phongByUser(iduser) {
     for (i = 0; i < list.length; i++) {
         document.getElementById("textoke").innerHTML = list[i].description;
         var des = document.getElementById("textoke").textContent;
+        let trangThaiPhong = list[i].rented
+            ? '<span class="badge bg-success"><i class="fa fa-unlock"></i> Còn trống</span>'
+            : '<span class="badge bg-danger"><i class="fa fa-lock"></i> Đã cho thuê</span>';
         main += `<div class="singleroom row">
         <div class="col-sm-3 divanhphong">
             <a href="chitietphong?id=${list[i].id}"><img src="${list[i].banner}" class="anhroom"></a>
@@ -309,6 +319,7 @@ async function phongByUser(iduser) {
                     <p class="dientichtro">${list[i].area}m²</p>
                     <p class="diachitro">${list[i].wards.districts.name}<br>${list[i].wards.districts.province.name}</p>
                     <p class="thoigiandangtro">${list[i].createdDate}<br>${list[i].createdTime}</p>
+                    <p class="trangthaiphong" style="margin-left: 10px;">${trangThaiPhong}</p>
                 </div>
                 <p class="motatro">${des}</p>
                 <div class="thongtinnguoidang">
@@ -371,6 +382,9 @@ async function searchPhongFinal(page, size, paramURL){
     for (i = 0; i < list.length; i++) {
         document.getElementById("textoke").innerHTML = list[i].description;
         var des = document.getElementById("textoke").textContent;
+        let trangThaiPhong = list[i].rented
+            ? '<span class="badge bg-success"><i class="fa fa-unlock"></i> Còn trống</span>'
+            : '<span class="badge bg-danger"><i class="fa fa-lock"></i> Đã cho thuê</span>';
         main += `<div class="singleroom row">
         <div class="col-sm-3 divanhphong">
             <a href="chitietphong?id=${list[i].id}"><img src="${list[i].banner}" class="anhroom"></a>
@@ -382,6 +396,7 @@ async function searchPhongFinal(page, size, paramURL){
                 <p class="dientichtro">${list[i].area}m²</p>
                 <p class="diachitro">${list[i].wards.districts.name}<br>${list[i].wards.districts.province.name}</p>
                 <p class="thoigiandangtro">${list[i].createdDate}<br>${list[i].createdTime}</p>
+                <p class="trangthaiphong" style="margin-left: 10px;">${trangThaiPhong}</p>
             </div>
             <p class="motatro">${des}</p>
             <div class="thongtinnguoidang">

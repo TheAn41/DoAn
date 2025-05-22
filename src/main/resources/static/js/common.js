@@ -283,6 +283,11 @@ async function loadDataApi() {
                         "id": "wifi",
                         "value": "Wifi",
                         "type": "checkbox"
+                    },
+                    {
+                        "id": "rented",
+                        "value": "Còn trống",
+                        "type": "checkbox"
                     }
                 ]
             },
@@ -299,6 +304,11 @@ async function loadDataApi() {
                     {
                         "id": "service",
                         "value": "Dịch vụ dọn dẹp",
+                        "type": "checkbox"
+                    },
+                    {
+                        "id": "rented",
+                        "value": "Còn trống",
                         "type": "checkbox"
                     }
 
@@ -380,6 +390,11 @@ async function loadDataApi() {
                         "id": "parking",
                         "value": "Chỗ để xe",
                         "type": "checkbox"
+                    },
+                    {
+                        "id": "rented",
+                        "value": "Còn trống",
+                        "type": "checkbox"
                     }
                 ]
             },
@@ -453,6 +468,11 @@ async function loadDataApi() {
                     {
                         "id": "parking",
                         "value": "Chỗ để xe",
+                        "type": "checkbox"
+                    },
+                    {
+                        "id": "rented",
+                        "value": "Còn trống",
                         "type": "checkbox"
                     }
                 ]
@@ -528,6 +548,11 @@ async function loadDataApi() {
                     {
                         "id": "parking",
                         "value": "Chỗ để xe",
+                        "type": "checkbox"
+                    },
+                    {
+                        "id": "rented",
+                        "value": "Còn trống",
                         "type": "checkbox"
                     }
                 ]

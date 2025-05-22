@@ -83,7 +83,7 @@ public interface RoomRepository  extends JpaRepository<Room, Long> {
             "and (:bed is null or r.bed = :bed) and (:heater is null or r.heater = :heater)" +
             "and (:kitchen is null or r.kitchen = :kitchen) and (:wifi is null or r.wifi = :wifi)" +
             "and (:service is null or r.service = :service) and (:parking is null or r.parking = :parking)" +
-
+            "and (:rented is null or r.rented = :rented)"+
             "and (:frontWidth is null or r.frontWidth = :frontWidth) and (:loaiphong is null or r.category.id= :loaiphong)"+
             "and (:frontWidth_min is null or r.frontWidth >= :frontWidth_min) and (:frontWidth_max is null or r.frontWidth <= :frontWidth_max)"
     )
@@ -113,6 +113,7 @@ public interface RoomRepository  extends JpaRepository<Room, Long> {
                                         @Param("wifi") Integer wifi,
                                         @Param("service") Integer service,
                                         @Param("parking") Integer parking,
+                                        @Param("rented") Integer rented,
                                         Pageable pageable);
 
 

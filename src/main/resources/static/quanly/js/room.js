@@ -128,6 +128,7 @@ async function themPhong() {
     var wifi = document.getElementById('wifi')?.checked ? 1 : 0
     var parking = document.getElementById('parking')?.checked ? 1 : 0
     var chungwc = document.getElementById('chungwc')?.checked ? 1 : 0
+    var rented = document.getElementById('rented')?.checked ? 1 : 0
 
     const filePath = document.getElementById('anhbiass')
     const formData = new FormData()
@@ -172,7 +173,9 @@ async function themPhong() {
         "heater": heater,
         "kitchen": kitchen,
         "wifi": wifi,
-        "parking": parking
+        "parking": parking,
+        "chungwc":chungwc,
+        "rented": rented
     }
 
     debugger
@@ -409,6 +412,7 @@ async function loadChiTietPhong() {
         if ($("#tv").length) $("#tv").prop("checked", room.tv == 1);
         if ($("#fridge").length) $("#fridge").prop("checked", room.fridge == 1);
         if ($("#bed").length) $("#bed").prop("checked", room.bed == 1);
+        if ($("#rented").length) $("#rented").prop("checked", room.rented == 1);
         if ($("#heater").length) $("#heater").prop("checked", room.heater == 1);
         if ($("#washingMachine").length) $("#washingMachine").prop("checked", room.washingMachine == 1);
         if ($("#kitchen").length) $("#kitchen").prop("checked", room.kitchen == 1);
@@ -541,27 +545,27 @@ function initForm() {
             {
                 "room": "6",
                 "name": "Chung cư mini",
-                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,direction,wifi,service"
+                "filters": "rented,tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,direction,wifi,service"
             },
             {
                 "room":"2",
                 "name": "Cho thuê nhà riêng",
-                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi"
+                "filters": "rented,tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi"
             },
             {
                 "room":"3",
                 "name": "Tìm người ở ghép",
-                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfPeople,closedWc,direction,wifi,parking"
+                "filters": "rented,tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfPeople,closedWc,direction,wifi,parking"
             },
             {
                 "room":"4",
                 "name": "Cho thuê mặt bằng",
-                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi,parking"
+                "filters": "rented,tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfRoom,numberOfWc,frontWidth,direction,wifi,parking"
             },
             {
                 "room":"1",
                 "name": "Cho thuê phòng trọ",
-                "filters": "tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfPeople,closedWc,frontWidth,direction,wifi,parking"
+                "filters": "rented,tv,fridge,bed,airConditioner,heater,washingMachine,kitchen,numberOfPeople,closedWc,frontWidth,direction,wifi,parking"
             }
         ],
         "params" : [
@@ -679,6 +683,12 @@ function initForm() {
                 "value": "Vệ sinh khép kín",
                 "type": "checkbox"
             },
+            {
+                "id": "rented",
+                "value": "Phòng còn trống",
+                "type": "checkbox",
+                "default": true
+            }
         ]
     }
 
@@ -830,7 +840,14 @@ function loadInput() {
 `
         document.getElementById("dieuhoa-div").innerHTML = dieuhoa
     }
-
+    if (document.getElementById("rented-div")) {
+        var rented = `
+            <label>Xac nhan phong con trong</label>
+            <input type="checkbox" class="form-control" />
+            <span class="validation-message"></span>  
+`
+        document.getElementById("rented-div").innerHTML = rented
+    }
     if (document.getElementById("maygiat-div")) {
         var maygiat = `
         <label>Máy giặt</label>

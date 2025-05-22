@@ -233,6 +233,7 @@ public class RoomController {
                                         @RequestParam(value = "wifi", required = false) Integer wifi,
                                         @RequestParam(value = "service", required = false) Integer service,
                                         @RequestParam(value = "parking", required = false) Integer parking,
+                                        @RequestParam(value = "rented", required = false) Integer rented,
                                    Pageable pageable){
         try{
             if (khuvuctinh != null){
@@ -267,7 +268,7 @@ public class RoomController {
             if(smallarea == null || largearea == null){
                 smallarea = 0F; largearea = 100000F;
             }
-            page = roomRepository.timKiemPhongFinal(smallprice, largeprice, smallarea, largearea, khuvuctinh, khuvuchuyen, khuvucxa, numberOfRoom, numberOfWc, airConditioner, washingMachine, startDate, endDate, closedWc, numberOfPeople, direction, frontWidth, loaiphong, frontWidth_min, frontWidth_max,tv, fridge, bed, heater, kitchen, wifi, service, parking ,pageable);
+            page = roomRepository.timKiemPhongFinal(smallprice, largeprice, smallarea, largearea, khuvuctinh, khuvuchuyen, khuvucxa, numberOfRoom, numberOfWc, airConditioner, washingMachine, startDate, endDate, closedWc, numberOfPeople, direction, frontWidth, loaiphong, frontWidth_min, frontWidth_max,tv, fridge, bed, heater, kitchen, wifi, service, parking,rented ,pageable);
             return page;
         } catch (Exception e){
             return null;
