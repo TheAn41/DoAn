@@ -412,7 +412,7 @@ async function searchPhongFinal(page, size, paramURL){
 
     var mainpage = ''
     for(i=1; i<= totalPage; i++){
-        mainpage += '<li onclick="phongTrangChu('+(Number(i)-1)+')" class="page-item"><a class="page-link" href="#danhsachcacphong">'+i+'</a></li>'
+        mainpage += '<li onclick="timKiemPhong('+(Number(i)-1)+')" class="page-item"><a class="page-link" href="#danhsachcacphong">'+i+'</a></li>'
     }
     document.getElementById("listpage").innerHTML = mainpage
 }

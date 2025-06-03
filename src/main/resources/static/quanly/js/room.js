@@ -127,7 +127,7 @@ async function themPhong() {
     var kitchen = document.getElementById('kitchen')?.checked ? 1 : 0
     var wifi = document.getElementById('wifi')?.checked ? 1 : 0
     var parking = document.getElementById('parking')?.checked ? 1 : 0
-    var chungwc = document.getElementById('chungwc')?.checked ? 1 : 0
+    var closedWc = document.getElementById('closedWc')?.checked ? 1 : 0
     var rented = document.getElementById('rented')?.checked ? 1 : 0
 
     const filePath = document.getElementById('anhbiass')
@@ -174,7 +174,6 @@ async function themPhong() {
         "kitchen": kitchen,
         "wifi": wifi,
         "parking": parking,
-        "chungwc":chungwc,
         "rented": rented
     }
 
@@ -413,6 +412,7 @@ async function loadChiTietPhong() {
         if ($("#fridge").length) $("#fridge").prop("checked", room.fridge == 1);
         if ($("#bed").length) $("#bed").prop("checked", room.bed == 1);
         if ($("#rented").length) $("#rented").prop("checked", room.rented == 1);
+        if ($("#closedWc").length) $("#closedWc").prop("checked", room.closedWc == 1);
         if ($("#heater").length) $("#heater").prop("checked", room.heater == 1);
         if ($("#washingMachine").length) $("#washingMachine").prop("checked", room.washingMachine == 1);
         if ($("#kitchen").length) $("#kitchen").prop("checked", room.kitchen == 1);
@@ -813,7 +813,7 @@ function getFilterByTypeRoom(type) {
 // }
 
 function hasWC() {
-    var checkBox = document.getElementById("chungwc");
+    var checkBox = document.getElementById("closedWc");
     if (checkBox.checked == true) {
         var html = `
                <div class="col-sm-3">
@@ -908,16 +908,16 @@ function loadInput() {
         document.getElementById("matbang-div").innerHTML = matbang
     }
 
-    if (document.getElementById("chungwc-div")) {
-        var chungwc = `
+    if (document.getElementById("closedWc-div")) {
+        var closedWc = `
             <div class="col-sm-2">
                 <label>WC chung</label>
-                <input id="chungwc" name="chungwc" type="checkbox" class="form-check-input"
+                <input id="closedWc" name="closedWc" type="checkbox" class="form-check-input"
                        onclick="hasWC()" style="display: block;">
             </div>
             <div id="addFilterDetail" class="row"></div>
         <span class="validation-message"></span>`
-        document.getElementById("chungwc-div").innerHTML = chungwc
+        document.getElementById("closedWc-div").innerHTML = closedWc
     }
 
 }
